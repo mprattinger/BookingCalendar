@@ -1,0 +1,60 @@
+.mpr-bc-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.mpr-bc-container a {
+  text-decoration: none;
+  color: black;
+}
+
+.mpr-bc-container .mpr-bc-table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  width: 100%;
+  border-top: 1px solid black;
+}
+
+.mpr-bc-container .mpr-bc-table .mpr-bc-cell {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  width: 14%;
+  text-align: center;
+  font-size: 0.8em;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.mpr-bc-container .mpr-bc-table .mpr-bc-header {
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 1em;
+}
+
+.mpr-bc-container .mpr-bc-month-toggler {
+  margin-top: 20px;
+}
+
+.mpr-bc-container .mpr-bc-month-toggler span {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+/*# sourceMappingURL=mpr-booking-calendar.css.map */

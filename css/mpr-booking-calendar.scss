@@ -1,0 +1,48 @@
+
+.mpr-bc-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+    
+
+
+
+    .mpr-bc-table {
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        width: 100%;
+        border-top: 1px solid black;
+
+        .mpr-bc-cell {
+            box-sizing: border-box;
+                flex-grow: 1;
+                width: 14%;
+                text-align: center;
+                font-size: 0.8em;
+                padding-top: 1%;
+                padding-bottom: 1%;
+        }
+
+        .mpr-bc-header {
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+    }
+
+    .mpr-bc-month-toggler {
+        margin-top: 20px;
+
+        span {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    }
+}
