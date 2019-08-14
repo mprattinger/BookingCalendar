@@ -1,8 +1,8 @@
-class MPR_Bookingcalendar_Client { 
+class MPR_Bookingcalendar_Client {
 
-    constructor(){
+    constructor() {
         this.parentDiv = document.getElementsByClassName("mpr-bc-table")[0];
-        if(this.parentDiv == null) return;
+        if (this.parentDiv == null) return;
 
         let currentDate = new Date();
         this.currentMonth = currentDate.getMonth() + 1;
@@ -20,17 +20,18 @@ class MPR_Bookingcalendar_Client {
         let first = this.getFirstDay();
         let last = this.getLastDay();
 
-        var child = this.parentDiv.lastElementChild;  
-        while (child && !child.classList.contains("mpr-bc-header")) { 
-            this.parentDiv.removeChild(child); 
-            child = this.parentDiv.lastElementChild; 
-        } 
+        var child = this.parentDiv.lastElementChild;
+        while (child && !child.classList.contains("mpr-bc-header")) {
+            this.parentDiv.removeChild(child);
+            child = this.parentDiv.lastElementChild;
+        }
 
-        for(var curr = first; curr < last; first.setDate(first.getDate() + 1)){
+        for (var curr = first; curr < last; first.setDate(first.getDate() + 1)) {
             let itm = this.buildDayItem(curr);
             this.parentDiv.appendChild(itm);
         }
-        
+
+        this.callWebService();
     }
 
     setEvents() {
@@ -41,7 +42,7 @@ class MPR_Bookingcalendar_Client {
 
         this.prevToggler.addEventListener("click", () => {
             this.currentMonth--;
-            if(this.currentMonth < 1) {
+            if (this.currentMonth < 1) {
                 this.currentMonth = 12;
                 this.currentYear--;
             }
@@ -50,7 +51,7 @@ class MPR_Bookingcalendar_Client {
         });
         this.nextToggler.addEventListener("click", () => {
             this.currentMonth++;
-            if(this.currentMonth > 12) {
+            if (this.currentMonth > 12) {
                 this.currentMonth = 1;
                 this.currentYear++;
             }
@@ -68,37 +69,37 @@ class MPR_Bookingcalendar_Client {
         });
     }
 
-    buildDayItem(theDate){
+    buildDayItem(theDate) {
         let itm = document.createElement("div");
         itm.setAttribute("class", "mpr-bc-cell");
         itm.innerText = theDate.getDate();
         return itm;
     }
 
-    getFirstDay(){
+    getFirstDay() {
         let first = new Date(this.currentYear, this.currentMonth - 1, 1);
-        while(first.getDay() != 1){
+        while (first.getDay() != 1) {
             first.setDate(first.getDate() - 1);
         }
         return first;
     }
 
-    getLastDay(){
+    getLastDay() {
         let last = new Date(this.currentYear, this.currentMonth, 1);
         last.setDate(last.getDate() - 1);
-        while(last.getDay() != 0){
+        while (last.getDay() != 0) {
             last.setDate(last.getDate() + 1);
         }
         last.setDate(last.getDate() + 1);
         return last;
     }
 
-    buildYearSelector(){
+    buildYearSelector() {
         let yearSelector = document.getElementById("mpr-bc-selector-year");
         let currentDate = new Date();
         let start = currentDate.getFullYear() - 1;
         let end = start + 20;
-        for(let i = start; i <= end; i++){
+        for (let i = start; i <= end; i++) {
             let opt = document.createElement("option");
             opt.value = i;
             opt.innerText = i;
@@ -112,6 +113,10 @@ class MPR_Bookingcalendar_Client {
 
         monthSelector.value = this.currentMonth;
         yearSelector.value = this.currentYear;
+    }
+
+    callWebService() {
+        
     }
 }
 

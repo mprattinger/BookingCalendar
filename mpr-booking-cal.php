@@ -14,16 +14,24 @@ if (!defined('WPINC')) {
 }
 
 require_once("MPR-Booking-Calendar.php");
+require_once("Controller/BookingCalendarController.php");
 
 function load_scripts(){
     $ftime = rand(1000, 9000);
 
-    $link = plugins_url( '/css/mpr-booking-calendar.css', __FILE__ );
+    $link = plugins_url( '/assets/css/mpr-booking-calendar.css', __FILE__ );
     wp_enqueue_style( 'mpr-booking-calendar-style', $link);
 
-    wp_register_script('mpr-booking-calendar', plugins_url( '/js/mpr-booking-calendar.js', __FILE__ ));
+    wp_register_script('mpr-booking-calendar', plugins_url( '/assets/js/mpr-booking-calendar.js', __FILE__ ));
+    wp_localize_script('mpr-booking-calendar', 'mprbcData', [
+        'endpoint' => esc_url_raw(rest_url('/mprbc/v1')),
+        'nonces' => [
+            'mprbc_nonce' => wp_create_nonce('mprbc_nonce'),
+            'wp_rest'   => wp_create_nonce('wp_rest')
+        ]
+    ]);
+    wp_enqueue_script( 'mpr-booking-calendar', plugins_url( '/assets/js/mpr-booking-calendar.js', __FILE__ ), array(), $ftime, true);
 
-    wp_enqueue_script( 'mpr-booking-calendar', plugins_url( '/js/mpr-booking-calendar.js', __FILE__ ), array(), $ftime, true);
 }
 add_action( 'wp_enqueue_scripts', 'load_scripts' );
 
@@ -31,3 +39,10 @@ add_action( 'wp_enqueue_scripts', 'load_scripts' );
 add_action("widgets_init", function(){
     register_widget("MPR_BookingCalendar");
 });
+
+function mpr_bc_register_controller_routes()
+{
+	$controller = new BookingCalendarController();
+	$controller->register_routes();
+}
+add_action('rest_api_init', 'mpr_bc_register_controller_routes');
