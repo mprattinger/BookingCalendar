@@ -16,7 +16,20 @@ class MPR_BookingCalendar extends WP_Widget
         ?>
         <div class="mpr-bc-container">
             <div class="mpr-bc-selector">
-                <select id="mpr-bc-selector-month"></select>
+                <select id="mpr-bc-selector-month">
+                    <option value="1">Januar</option>
+                    <option value="2">Februar   </option>
+                    <option value="3">März</option>
+                    <option value="4">April</option>
+                    <option value="5">Mai</option>
+                    <option value="6">Juni</option>
+                    <option value="7">Juli</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Dezember</option>
+                </select>
                 <select id="mpr-bc-selector-year"></select>
             </div>
             <div class="mpr-bc-table">

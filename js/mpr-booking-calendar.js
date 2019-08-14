@@ -5,8 +5,11 @@ class MPR_Bookingcalendar_Client {
         if(this.parentDiv == null) return;
 
         let currentDate = new Date();
-        this.currentMonth = currentDate.getMonth();
+        this.currentMonth = currentDate.getMonth() + 1;
         this.currentYear = currentDate.getFullYear();
+
+        this.buildYearSelector();
+        this.setValues();
 
         this.setEvents();
 
@@ -17,13 +20,11 @@ class MPR_Bookingcalendar_Client {
         let first = this.getFirstDay();
         let last = this.getLastDay();
 
-        let childs = this.parentDiv.children;
-        for (let i = 0; i <= childs.length - 1; i++) {
-            let itm = childs[i];
-            if(!itm.classList.contains("mpr-bc-header")){
-                this.parentDiv.removeChild(itm);
-            }
-        }
+        var child = this.parentDiv.lastElementChild;  
+        while (child && !child.classList.contains("mpr-bc-header")) { 
+            this.parentDiv.removeChild(child); 
+            child = this.parentDiv.lastElementChild; 
+        } 
 
         for(var curr = first; curr < last; first.setDate(first.getDate() + 1)){
             let itm = this.buildDayItem(curr);
@@ -35,6 +36,8 @@ class MPR_Bookingcalendar_Client {
     setEvents() {
         this.prevToggler = document.getElementById("mpr-bc-toggler-prev");
         this.nextToggler = document.getElementById("mpr-bc-toggler-next")
+        let yearSelector = document.getElementById("mpr-bc-selector-year");
+        let monthSelector = document.getElementById("mpr-bc-selector-month");
 
         this.prevToggler.addEventListener("click", () => {
             this.currentMonth--;
@@ -43,6 +46,7 @@ class MPR_Bookingcalendar_Client {
                 this.currentYear--;
             }
             this.buildCalendar();
+            this.setValues();
         });
         this.nextToggler.addEventListener("click", () => {
             this.currentMonth++;
@@ -51,7 +55,17 @@ class MPR_Bookingcalendar_Client {
                 this.currentYear++;
             }
             this.buildCalendar();
+            this.setValues();
         })
+
+        yearSelector.addEventListener("change", (evt) => {
+            this.currentYear = parseInt(evt.target.value);
+            this.buildCalendar();
+        });
+        monthSelector.addEventListener("change", (evt) => {
+            this.currentMonth = parseInt(evt.target.value);
+            this.buildCalendar();
+        });
     }
 
     buildDayItem(theDate){
@@ -62,7 +76,7 @@ class MPR_Bookingcalendar_Client {
     }
 
     getFirstDay(){
-        let first = new Date(this.currentYear, this.currentMonth, 1);
+        let first = new Date(this.currentYear, this.currentMonth - 1, 1);
         while(first.getDay() != 1){
             first.setDate(first.getDate() - 1);
         }
@@ -70,12 +84,34 @@ class MPR_Bookingcalendar_Client {
     }
 
     getLastDay(){
-        let last = new Date(this.currentYear, this.currentMonth + 1, 1);
+        let last = new Date(this.currentYear, this.currentMonth, 1);
         last.setDate(last.getDate() - 1);
-        while(last.getDay() != 1){
+        while(last.getDay() != 0){
             last.setDate(last.getDate() + 1);
         }
+        last.setDate(last.getDate() + 1);
         return last;
+    }
+
+    buildYearSelector(){
+        let yearSelector = document.getElementById("mpr-bc-selector-year");
+        let currentDate = new Date();
+        let start = currentDate.getFullYear() - 1;
+        let end = start + 20;
+        for(let i = start; i <= end; i++){
+            let opt = document.createElement("option");
+            opt.value = i;
+            opt.innerText = i;
+            yearSelector.appendChild(opt);
+        }
+    }
+
+    setValues() {
+        let yearSelector = document.getElementById("mpr-bc-selector-year");
+        let monthSelector = document.getElementById("mpr-bc-selector-month");
+
+        monthSelector.value = this.currentMonth;
+        yearSelector.value = this.currentYear;
     }
 }
 
