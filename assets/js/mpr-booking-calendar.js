@@ -116,7 +116,18 @@ class MPR_Bookingcalendar_Client {
     }
 
     callWebService() {
+        let xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+            if(xhr.status >= 200 && xhr.status < 300) {
+                console.log("sucess", xhr)
+            } else {
+                console.error(`Error ${xhr.status}`);
+            }
+        }
         
+        xhr.open("GET", mprbcData.endpoint + "/bcdata/2019/12")
+        // xhr.setRequestHeader('X-WP-Nonce', mprbcData.nonces.wp_rest);
+        xhr.send();
     }
 }
 

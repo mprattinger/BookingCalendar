@@ -25,10 +25,10 @@ function load_scripts(){
     wp_register_script('mpr-booking-calendar', plugins_url( '/assets/js/mpr-booking-calendar.js', __FILE__ ));
     wp_localize_script('mpr-booking-calendar', 'mprbcData', [
         'endpoint' => esc_url_raw(rest_url('/mprbc/v1')),
-        'nonces' => [
-            'mprbc_nonce' => wp_create_nonce('mprbc_nonce'),
-            'wp_rest'   => wp_create_nonce('wp_rest')
-        ]
+        // 'nonces' => [
+        //     'mprbc_nonce' => wp_create_nonce('mprbc_nonce'),
+        //     'wp_rest'   => wp_create_nonce('wp_rest')
+        // ]
     ]);
     wp_enqueue_script( 'mpr-booking-calendar', plugins_url( '/assets/js/mpr-booking-calendar.js', __FILE__ ), array(), $ftime, true);
 

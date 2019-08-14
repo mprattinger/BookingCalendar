@@ -11,14 +11,15 @@ class BookingCalendarController {
         register_rest_route( $this->namespace, '/' . $this->resource_name . '/(?P<year>[0-9]+)/(?P<month>[0-9]+)', [
             'methods'   => 'GET',
             'callback'  => [ $this, 'loadBookings' ],
-            'args'      => [
-                'mprbc_nonce' => [
-                    'validate_callback' => function($mprbc_nonce) {
-                        // return wp_verify_nonce($mprbc_nonce, 'mprbc_nonce');
-                        return false;
-                    }
-                ]
-            ]
+            // 'args'      => [
+            //     'mprbc_nonce' => [
+            //         //'validate_callback' => 'validate'
+            //         'validate_callback' => function ($param, $request, $key) {
+            //             $test = wp_verify_nonce($param, 'mprbc_nonce');
+            //             return false;
+            //         }
+            //     ]
+            // ]
         ]);
     }
 
@@ -31,4 +32,8 @@ class BookingCalendarController {
 
         return $object;
     }
+
+    // private function validate($param, $request, $key){
+    //     return true;
+    // }
 }
