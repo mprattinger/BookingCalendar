@@ -13,8 +13,17 @@ if (!defined('WPINC')) {
 	die;
 }
 
+require "vendor/autoload.php";
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('name');
+$log->pushHandler(new StreamHandler(ABSPATH . '/log/mpr.log', Logger::WARNING));
+
 require_once("MPR-Booking-Calendar.php");
 require_once("Controller/BookingCalendarController.php");
+require_once("Services/CalendarService.php");
 
 function load_scripts(){
     $ftime = rand(1000, 9000);
@@ -46,3 +55,8 @@ function mpr_bc_register_controller_routes()
 	$controller->register_routes();
 }
 add_action('rest_api_init', 'mpr_bc_register_controller_routes');
+
+$log->warning("Finished loading the plugin..");
+
+$test = new CalendarService();
+$test->loadCalendar();

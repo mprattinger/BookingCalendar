@@ -1,5 +1,7 @@
 <?php
 
+//namespace MPR\Wordpress\BookingCalendar;
+
 class MPR_BookingCalendar extends WP_Widget
 {
     public function __construct()

@@ -1,5 +1,7 @@
 <?php
 
+//namespace MPR\Wordpress\BookingCalendar\Controller;
+
 class BookingCalendarController {
 
     public function __construct(){
