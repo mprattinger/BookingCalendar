@@ -2,11 +2,15 @@
 
 //namespace MPR\Wordpress\BookingCalendar\Controller;
 
+require_once(__DIR__ . "/../Services/CalendarService.php");
+
 class BookingCalendarController {
 
     public function __construct(){
         $this->namespace     = '/mprbc/v1';
         $this->resource_name = 'bcdata';
+
+        $this->calendarService = new CalendarService();
     }
 
     public function register_routes() {
@@ -26,13 +30,12 @@ class BookingCalendarController {
     }
 
     public function loadBookings( $request ) {
-        
-        $object = new stdClass();
+        $y = $request['year'];
+        $m = $request['month'];
+        $start = date("01." . $m . "." . $y);
+        $end = date("t." . $m . "." . $y);
 
-        $object->year = $request['year'];
-        $object->month = $request['month'];
-
-        return $object;
+        return $this->calendarService->loadEvents($start, $end);
     }
 
     // private function validate($param, $request, $key){

@@ -1,6 +1,7 @@
 <?php
 
 //namespace MPR\Wordpress\BookingCalendar;
+require_once("Services/CalendarService.php");
 
 class MPR_BookingCalendar extends WP_Widget
 {

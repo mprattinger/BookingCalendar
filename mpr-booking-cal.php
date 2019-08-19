@@ -13,6 +13,8 @@ if (!defined('WPINC')) {
 	die;
 }
 
+putenv('GOOGLE_APPLICATION_CREDENTIALS=C:\\Users\\mprat\\OneDrive\\Projekte\\Mani\\Kalendar-effcb32923b4.json');
+
 require "vendor/autoload.php";
 
 use Monolog\Logger;
@@ -58,5 +60,7 @@ add_action('rest_api_init', 'mpr_bc_register_controller_routes');
 
 $log->warning("Finished loading the plugin..");
 
-$test = new CalendarService();
-$test->loadCalendar();
+// $test = new CalendarService();
+// $start = date("01.m.Y");
+// $end = date("t.m.Y");
+// $events =$test->loadEvents($start, $end);

@@ -8,7 +8,7 @@
         text-decoration: none;
         color: black;
     }
-    
+
 
 
 
@@ -22,11 +22,19 @@
         .mpr-bc-cell {
             box-sizing: border-box;
                 flex-grow: 1;
-                width: 14%;
+                width: 13%;
                 text-align: center;
                 font-size: 0.8em;
                 padding-top: 1%;
                 padding-bottom: 1%;
+                margin: 1px;
+        }
+
+        .free {
+            background-color: lightgreen;
+        }
+        .booked {
+            background-color: lightcoral;
         }
 
         .mpr-bc-header {
