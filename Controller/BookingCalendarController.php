@@ -14,7 +14,7 @@ class BookingCalendarController {
     }
 
     public function register_routes() {
-        register_rest_route( $this->namespace, '/' . $this->resource_name . '/(?P<year>[0-9]+)/(?P<month>[0-9]+)', [
+        register_rest_route( $this->namespace, '/' . $this->resource_name , [
             'methods'   => 'GET',
             'callback'  => [ $this, 'loadBookings' ],
             // 'args'      => [
@@ -30,10 +30,10 @@ class BookingCalendarController {
     }
 
     public function loadBookings( $request ) {
-        $y = $request['year'];
-        $m = $request['month'];
-        $start = date("01." . $m . "." . $y);
-        $end = date("t." . $m . "." . $y);
+        $starting = $request['starting'];
+        $ending = $request['ending'];
+        $start = date($starting); //date("01." . $m . "." . $y);
+        $end = date($ending); //date("t." . $m . "." . $y);
 
         return $this->calendarService->loadEvents($start, $end);
     }

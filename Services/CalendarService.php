@@ -47,7 +47,9 @@ class CalendarService {
             if($event->start->date == null) $d->starting = $event->start->dateTime;
             else $d->starting = $event->start->date;
             if($event->end->date == null) $d->ending = $event->end->dateTime;
-            else$d->ending = $event->end->date;
+            else {
+                $d->ending = $event->end->date;
+            }
 
             array_push($ret, $d);
         }

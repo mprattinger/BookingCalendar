@@ -29,10 +29,9 @@ class MPR_Bookingcalendar_Client {
 
     var bookings = await this.callWebService();
     var bookedDays = this.getBookedDays(bookings);
-    console.log(bookedDays);
 
     for (var curr = first; curr < last; first.setDate(first.getDate() + 1)) {
-      let itm = this.buildDayItem(curr);
+      let itm = this.buildDayItem(curr, bookedDays);
       this.parentDiv.appendChild(itm);
     }
   }
@@ -72,9 +71,10 @@ class MPR_Bookingcalendar_Client {
     });
   }
 
-  buildDayItem(theDate) {
+  buildDayItem(theDate, /** @type {Array} */bookedDays) {
     let itm = document.createElement('div');
-    itm.setAttribute('class', 'mpr-bc-cell free');
+    if(bookedDays.includes(theDate.getDate().toString() + (theDate.getMonth() + 1).toString())) itm.setAttribute('class', 'mpr-bc-cell booked');
+    else itm.setAttribute('class', 'mpr-bc-cell free');
     itm.innerText = theDate.getDate();
     return itm;
   }
@@ -132,8 +132,10 @@ class MPR_Bookingcalendar_Client {
         }
       };
 
+      let first = this.getFirstDay();
+      let last = this.getLastDay();
       // @ts-ignore
-      xhr.open('GET', mprbcData.endpoint + '/bcdata/' + this.currentYear + '/' + this.currentMonth);
+      xhr.open('GET', mprbcData.endpoint + '/bcdata?starting=' + this.formatDate(first) + '&ending=' + this.formatDate(last));
       // xhr.setRequestHeader('X-WP-Nonce', mprbcData.nonces.wp_rest);
       xhr.send();
     });
@@ -146,11 +148,27 @@ class MPR_Bookingcalendar_Client {
         let starting = new Date(b.starting);
         let ending = new Date(b.ending);
         while(starting <= ending){
-            ret.push(starting.getDate());
+            //if((starting.getMonth() + 1) == this.currentMonth) {
+                ret.push(starting.getDate().toString() + (starting.getMonth() + 1).toString());
+            //};
             starting.setDate(starting.getDate() + 1);
         }
     }
     return ret;
+  }
+
+  formatDate(theDate) {
+    let dd = theDate.getDate();
+    let mm = theDate.getMonth() + 1;
+
+    var yyyy = theDate.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    return yyyy + '-' + mm + '-' + dd;
   }
 }
 
