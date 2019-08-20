@@ -1,8 +1,5 @@
 <?php
 
-//https://github.com/googleapis/google-api-php-client/blob/master/UPGRADING.md
-//https://devsware.wordpress.com/2015/03/28/google-calendar-api-server-to-server-web-application/
-
 $base = __DIR__ . "/../vendor/";
 
 include($base . "autoload.php");
@@ -11,7 +8,15 @@ include(__DIR__ . "/../Models/Event.php");
 class CalendarService {
 
     const GOOGLE_AUTH = __DIR__ . "/../auth.json";
-    const CALENDAR_ID = "4i6pm6e08b1jnll1au67lkuac0@group.calendar.google.com";
+
+    public function __construct()
+    {
+        $optionsRaw = get_option("widget_mpr_bookingcalendar");
+        $options = $optionsRaw[2];
+
+        if(!empty($options['mpr-bc-calid']))
+        $this->calendarId = $options['mpr-bc-calid'];
+    }
 
     public function loadEvents($start, $end) {
 
@@ -35,7 +40,7 @@ class CalendarService {
         $timeMin = date("c", strtotime($start));
         $timeMax = date("c", strtotime($end));
         //$list =  $service->calendarList->listCalendarList();
-        $events = $service->events->listEvents(self::CALENDAR_ID, array("timeMin" => $timeMin, "timeMax" => $timeMax));
+        $events = $service->events->listEvents($this->calendarId, array("timeMin" => $timeMin, "timeMax" => $timeMax));
 
         //$ret = new \ArrayObject();
         $ret = array();

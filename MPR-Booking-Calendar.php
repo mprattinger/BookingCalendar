@@ -66,8 +66,27 @@ class MPR_BookingCalendar extends WP_Widget
     }
 
     public function form($instance){
+        $calid = !empty($instance['mpr-bc-calid']) ? $instance['mpr-bc-calid'] : esc_html__('', 'text_domain');
+        ?>
+        <p>
+            <label for="<?php echo esc_attr($this->get_field_id('mpr-bc-calid')); ?>">
+                <?php esc_attr_e('Google Kalender Id:', 'text_domain');?>
+            </label>
+            <input
+                class="widefat"
+                id="<?php echo esc_attr($this->get_field_id('mpr-bc-calid')); ?>"
+                name="<?php echo esc_attr($this->get_field_name('mpr-bc-calid')); ?>"
+                type="text"
+                value="<?php echo esc_attr($calid); ?>">
+        </p>
+        <?php
     }
 
     function update($new_instance, $old_instance){
+        $instance = array();
+
+        $instance['mpr-bc-calid'] = (!empty($new_instance['mpr-bc-calid'])) ? strip_tags($new_instance['mpr-bc-calid']) : '';
+
+        return $instance;
     }
 }
