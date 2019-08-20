@@ -35,11 +35,20 @@
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  width: 14%;
+  width: 13%;
   text-align: center;
   font-size: 0.8em;
   padding-top: 1%;
   padding-bottom: 1%;
+  margin: 1px;
+}
+
+.mpr-bc-container .mpr-bc-table .free {
+  background-color: lightgreen;
+}
+
+.mpr-bc-container .mpr-bc-table .booked {
+  background-color: lightcoral;
 }
 
 .mpr-bc-container .mpr-bc-table .mpr-bc-header {

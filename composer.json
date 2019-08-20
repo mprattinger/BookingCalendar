@@ -1,0 +1,14 @@
+{
+    "name": "mprat/mpr-booking-cal",
+    "type": "project",
+    "authors": [
+        {
+            "name": "mprattinger",
+            "email": "mprattinger@outlook.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^1.24",
+        "google/apiclient": "^2.2"
+    }
+}
