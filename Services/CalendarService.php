@@ -48,9 +48,10 @@ class CalendarService {
             else $d->starting = $event->start->date;
             if($event->end->date == null) $d->ending = $event->end->dateTime;
             else {
-                $d->ending = $event->end->date;
+                $endd = date_create($d->ending = $event->end->date);
+                $endd->sub(new DateInterval("P1D"));
+                $d->ending = $endd->format("Y-m-d");
             }
-
             array_push($ret, $d);
         }
 
