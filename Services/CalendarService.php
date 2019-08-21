@@ -4,10 +4,12 @@ $base = __DIR__ . "/../vendor/";
 
 include($base . "autoload.php");
 include(__DIR__ . "/../Models/Event.php");
+include(__DIR__ . "/../Models/Cache.php");
 
 class CalendarService {
 
     const GOOGLE_AUTH = __DIR__ . "/../auth.json";
+    const CACHE_PRE = "mpr-bc-cal";
 
     public function __construct()
     {
@@ -60,7 +62,30 @@ class CalendarService {
             array_push($ret, $d);
         }
 
+        $this->writeToCache($start, $end, $ret);
         return $ret;
     }
 
+    function loadData($from, $to) {
+        $cacheQuery = self::CACHE_PRE . '-' . $from . '-' . $to;{
+        $jsonData = get_option($cacheQuery);
+        if(empty(trim($jsonData))) return $this->loadEvents($from, $to);
+
+        $cached = json_decode($jsonData);
+        $diff = time() - $cached->CacheTime;
+        if ($diff > 600) return $this->loadEvents($from, $to);
+
+        return $cached->Data;
+    }
+
+    function writeToCache($from, $to, $events) {
+        $cacheQuery = self::CACHE_PRE . '-' . $from . '-' . $to;
+
+        $cache = new Cache();
+        $cache->CacheTime = time();
+        $cache->Data = $events;
+
+        $jsonData = json_encode($cache);
+        update_option($cacheQuery, $jsonData);
+    }
 }

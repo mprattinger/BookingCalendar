@@ -35,7 +35,7 @@ class BookingCalendarController {
         $start = date($starting); //date("01." . $m . "." . $y);
         $end = date($ending); //date("t." . $m . "." . $y);
 
-        return $this->calendarService->loadEvents($start, $end);
+        return $this->calendarService->loadData($start, $end);
     }
 
     // private function validate($param, $request, $key){
