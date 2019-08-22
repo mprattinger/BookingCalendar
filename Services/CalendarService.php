@@ -20,7 +20,8 @@ class CalendarService {
         $this->calendarId = $options['mpr-bc-calid'];
     }
 
-    public function loadEvents($start, $end) {
+    public function loadEvents($start, $end)
+    {
 
         $scopes = array("https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.readonly",
         "https://www.googleapis.com/auth/calendar.events.readonly", "https://www.googleapis.com/auth/calendar.events");
@@ -31,29 +32,27 @@ class CalendarService {
         $client->setAuthConfig(self::GOOGLE_AUTH);
 
         $client->setScopes($scopes);
-
-    //    if($client->getAuth()->isAccessTokenExpired())
-        // $client->getAuth()->refreshTokenWithAssertion();
         $client->authorize();
-
 
        $service = new Google_Service_Calendar($client);
 
         $timeMin = date("c", strtotime($start));
         $timeMax = date("c", strtotime($end));
-        //$list =  $service->calendarList->listCalendarList();
         $events = $service->events->listEvents($this->calendarId, array("timeMin" => $timeMin, "timeMax" => $timeMax));
 
-        //$ret = new \ArrayObject();
         $ret = array();
 
-        foreach($events as $event){
+        foreach($events as $event)
+        {
             $d = new Event();
             $d->summary = $event->summary;
             $d->description = $event->description;
             if($event->start->date == null) $d->starting = $event->start->dateTime;
             else $d->starting = $event->start->date;
-            if($event->end->date == null) $d->ending = $event->end->dateTime;
+            if($event->end->date == null)
+            {
+                $d->ending = $event->end->dateTime;
+            }
             else {
                 $endd = date_create($d->ending = $event->end->date);
                 $endd->sub(new DateInterval("P1D"));
@@ -66,8 +65,9 @@ class CalendarService {
         return $ret;
     }
 
-    function loadData($from, $to) {
-        $cacheQuery = self::CACHE_PRE . '-' . $from . '-' . $to;{
+    function loadData($from, $to)
+    {
+        $cacheQuery = self::CACHE_PRE . '-' . $from . '-' . $to;
         $jsonData = get_option($cacheQuery);
         if(empty(trim($jsonData))) return $this->loadEvents($from, $to);
 
@@ -78,7 +78,8 @@ class CalendarService {
         return $cached->Data;
     }
 
-    function writeToCache($from, $to, $events) {
+    function writeToCache($from, $to, $events)
+    {
         $cacheQuery = self::CACHE_PRE . '-' . $from . '-' . $to;
 
         $cache = new Cache();
