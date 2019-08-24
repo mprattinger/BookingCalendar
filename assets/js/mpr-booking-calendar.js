@@ -43,32 +43,32 @@ class MprBookingcalendarClient {
     const yearSelector = document.getElementById('mpr-bc-selector-year');
     const monthSelector = document.getElementById('mpr-bc-selector-month');
 
-    this.prevToggler.addEventListener('click', () => {
+    this.prevToggler.addEventListener('click', async () => {
       this.currentMonth--;
       if (this.currentMonth < 1) {
         this.currentMonth = 12;
         this.currentYear--;
       }
-      this.buildCalendar();
+      await this.buildCalendar();
       this.setValues();
     });
-    this.nextToggler.addEventListener('click', () => {
+    this.nextToggler.addEventListener('click', async () => {
       this.currentMonth++;
       if (this.currentMonth > 12) {
         this.currentMonth = 1;
         this.currentYear++;
       }
-      this.buildCalendar();
+      await this.buildCalendar();
       this.setValues();
     });
 
-    yearSelector.addEventListener('change', (el, evt) => {
+    yearSelector.addEventListener('change', async (el, evt) => {
       this.currentYear = parseInt(evt.target.value);
-      this.buildCalendar();
+      await this.buildCalendar();
     });
-    monthSelector.addEventListener('change', (el, evt) => {
+    monthSelector.addEventListener('change', async (el, evt) => {
       this.currentMonth = parseInt(evt.target.value);
-      this.buildCalendar();
+      await this.buildCalendar();
     });
   }
 
@@ -138,7 +138,6 @@ class MprBookingcalendarClient {
       const last = this.getLastDay();
       // @ts-ignore
       xhr.open('GET', window.mprbcData.endpoint + '/bcdata?starting=' + this.formatDate(first) + '&ending=' + this.formatDate(last));
-      // xhr.setRequestHeader('X-WP-Nonce', mprbcData.nonces.wp_rest);
       xhr.send();
     });
   }
