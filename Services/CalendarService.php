@@ -45,8 +45,6 @@ class CalendarService {
         foreach($events as $event)
         {
             $d = new Event();
-            $d->summary = $event->summary;
-            $d->description = $event->description;
             if($event->start->date == null) $d->starting = $event->start->dateTime;
             else $d->starting = $event->start->date;
             if($event->end->date == null)
